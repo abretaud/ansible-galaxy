@@ -24,12 +24,3 @@
   environment:
     PYTHONPATH: null
     VIRTUAL_ENV: "{{ galaxy_venv_dir }}"
-
-- name: Build uwsgi plugin spinningfifo
-  script:
-    cmd: "./scripts/install_uwsgi_plugins.sh {{ galaxy_venv_dir }}"
-    chdir: "{{ galaxy_root }}"
-  args:
-    creates: "{{ galaxy_venv_dir }}/lib/uwsgi/plugins/spinningfifo_plugin.so"
-  environment:
-    VIRTUAL_ENV: "{{ galaxy_venv_dir }}"

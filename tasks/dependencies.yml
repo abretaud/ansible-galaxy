@@ -36,6 +36,15 @@
         VIRTUAL_ENV: "{{ galaxy_venv_dir }}"
       when: (not ansible_check_mode) and conditional_dependencies.stdout_lines | length > 0
 
+    - name: Build uwsgi plugin spinningfifo
+      script:
+        cmd: "./scripts/install_uwsgi_plugins.sh {{ galaxy_venv_dir }}"
+        chdir: "{{ galaxy_root }}"
+      args:
+        creates: "{{ galaxy_venv_dir }}/lib/uwsgi/plugins/spinningfifo_plugin.so"
+      environment:
+        VIRTUAL_ENV: "{{ galaxy_venv_dir }}"
+
   remote_user: "{{ galaxy_remote_users.privsep | default(__galaxy_remote_user) }}"
   become: "{{ true if galaxy_become_users.privsep is defined else __galaxy_become }}"
   become_user: "{{ galaxy_become_users.privsep | default(__galaxy_become_user) }}"
